@@ -1,0 +1,218 @@
+/* ==========================================================================
+   AURA DESIGN SYSTEM - CORE VARIABLES & TOKENS
+   ========================================================================== */
+:root {
+  --bg-color: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #8e8e93;
+  --text-tertiary: #48484a;
+  
+  --accent-rgb: 255, 45, 85;
+  --accent: rgb(var(--accent-rgb));
+  --accent-gradient: linear-gradient(135deg, #ff2d55 0%, #af52de 100%);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   RESET & BASICS
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Disabled for Lenis smooth scroll */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+  background-color: var(--bg-color);
+}
+
+/* ==========================================================================
+   PRELOADER OVERLAY
+   ========================================================================== */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: opacity 1s var(--ease-out-expo), visibility 1s var(--ease-out-expo);
+}
+
+.preloader-bg-glow {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, rgba(0,0,0,0) 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(60px);
+  pointer-events: none;
+  animation: pulse-glow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+.preloader-content {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 2;
+}
+
+.preloader-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #7f7f7f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.preloader-visual {
+  height: 80px;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Elegant Rotating Flower Spinner */
+.flower-spinner {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  animation: rotate-spinner 8s linear infinite;
+}
+
+.flower-spinner .petal {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--accent-gradient);
+  border-radius: 50% 0 50% 0;
+  top: 12px;
+  left: 12px;
+  transform-origin: center center;
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.3);
+}
+
+.flower-spinner .petal:nth-child(1) { transform: rotate(0deg) translate(14px); }
+.flower-spinner .petal:nth-child(2) { transform: rotate(90deg) translate(14px); }
+.flower-spinner .petal:nth-child(3) { transform: rotate(180deg) translate(14px); }
+.flower-spinner .petal:nth-child(4) { transform: rotate(270deg) translate(14px); }
+
+@keyframes rotate-spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.preloader-progress-container {
+  width: 100%;
+}
+
+.preloader-progress-bar {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.preloader-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--accent-gradient);
+  box-shadow: 0 0 10px var(--accent);
+  transition: width 0.1s linear;
+}
+
+.preloader-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
+.preloader-percentage {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   BACKGROUND CANVAS ENGINE
+   ========================================================================== */
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  background-color: var(--bg-color);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#bloom-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   SCROLL LAYOUT (SPACER ONLY)
+   ========================================================================== */
+#scroll-container {
+  position: relative;
+  width: 100%;
+  z-index: 2; /* Sits on top of the fixed background canvas */
+  pointer-events: none; /* Let clicks pass through */
+}
+
+.scroll-spacer {
+  height: 600vh; /* Smooth, deep scroll depth to drive the blooming */
+  width: 100%;
+  pointer-events: none;
+}
